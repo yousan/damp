@@ -7,6 +7,8 @@ services:
     ports:
       - 80:80
     volumes:
+      # Add symlink directories if you use symlinks at documents.
+      # - ~/git:/Users/home/username/git
       - ~/public_html:/var/www/vhosts
     environment:
       PMA_HOST: mysql
