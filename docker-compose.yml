@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+  php5.6-apache.dev:
+    image: yousan/php5.6-apache
+    ports:
+      - 80:80
+    volumes:
+      - ~/public_html:/var/www/vhosts
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: example
+
+  mysql.dev:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
+
+  dnsmasq.dev:
+    image: yousan/dnsmasq
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    cap_add:
+      - NET_ADMIN
