@@ -6,7 +6,6 @@ echo '終了するには Ctrl+C を押してください。'
 sleep 3
 
 cd -- "$(dirname "$BASH_SOURCE")"
-pwd
 
 docker-compose up
 
