@@ -11,7 +11,7 @@ services:
       # - ~/git:/Users/home/username/git
       - ~/public_html:/var/www/vhosts
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql.dev
       PMA_USER: root
       PMA_PASSWORD: example
 
@@ -21,6 +21,8 @@ services:
       MYSQL_ROOT_PASSWORD: example
     ports:
       - 3306:3306
+#    volumes:
+#      - /var/lib/mysql:/var/lib/mysql
 
   dnsmasq.dev:
     image: yousan/dnsmasq
