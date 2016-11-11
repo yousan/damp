@@ -19,8 +19,6 @@ script:
  - mkdir ~/public_html
  - mkdir ~/public_html/example.dev
  - ls -lat
- - cd ~/
- - ls -lart
  - ls -latr
  - docker-compose up -d
  - docker ps
