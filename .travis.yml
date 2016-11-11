@@ -16,6 +16,7 @@ before_script:
  - sudo fuser 53/tcp
  - sudo fuser 53/udp
  - sudo lsof -i :53
+ - ps auxww
 
 
 script:
