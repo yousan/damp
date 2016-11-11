@@ -19,7 +19,7 @@ before_script:
  - ps auxww
  - ls /etc/init.d
  - locate dnsmasq
- - sudo 
+ - sudo killall dnsmasq
 #  - sudo /etc/init.d/dnsmasq stop
 # - sudo systemctl
 # - sudo service dnsmasq stop
