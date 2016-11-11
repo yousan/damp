@@ -16,6 +16,4 @@ before_script:
 script:
  - docker-compose up -d
  - docker ps
- - ls ~/
- - cd ~/
- - pwd -P
+ - ./bin/test.sh
