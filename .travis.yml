@@ -15,4 +15,4 @@ before_script:
 
 script:
  - docker-compose up -d
-
+ - docker ps
