@@ -18,7 +18,9 @@ before_script:
  - sudo lsof -i :53
  - ps auxww
  - ls /etc/init.d
- - sudo /etc/init.d/dnsmasq stop
+ - locate dnsmasq
+ - sudo 
+#  - sudo /etc/init.d/dnsmasq stop
 # - sudo systemctl
 # - sudo service dnsmasq stop
 # - sudo service --status-all
