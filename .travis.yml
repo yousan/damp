@@ -14,12 +14,6 @@ before_script:
  - sudo killall dnsmasq
 
 script:
- - pwd -P
- - ls -lat
- - mkdir ~/public_html
- - mkdir ~/public_html/example.dev
- - ls -lat
- - ls -latr
  - docker-compose up -d
  - docker ps
  - ./bin/test.sh
