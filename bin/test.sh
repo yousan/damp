@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd ~/
-mkdir ~/publc_html/example.dev
+mkdir -p ~/publc_html/example.dev
 echo 'Hello World' > ~/public_html/example.dev/hello.html
 RET=`curl http://example.dev/hello.html | grep 'Hello World'`
 if [ ! -z "$RET" ]; then
