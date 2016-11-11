@@ -11,22 +11,7 @@ notifications:
       secure: fHr86O7X76sF70rHsehJDhycWDmKNrMHL/cmpVtftKHZhLB7LcoUAXova42Cw+dZO1O3PhXrB3dIpsl+bBa3OE/RykwO5oJpdgT7T8nOumZtQbFjVlfvh3yqz6jF10++0/U05iENODwQcUBI9mUJCMRvCPSLsh1EZU/ZkkQLprhItEtpe8G46Tlhj4wSwciZ2YH8tV1znHVm+Bu9eake+TH3PnBU+XMhoiyvHtw1clcN8c70Ln0Yy6Jb7U5elo295SYodL/SeEY4cXdbJwC3UvTgCjzyJfDMTUMY9uRPU5AlOeLEMnwWrWyAUu0y8aNkKpq084+t3vICDA046iSgZcQ69pexPDNSxIF7DuPtvLJvixGogxKZ20eyDQigE0j/bFrZuZUog2Jd2YErKOdapOmh4MA5MSbYwEt2qkpCvDLiqwaR43Z0YgCyXXh+XZVxgfJGc/M02KeYd1EB+Gzm9sDOIeYyjAPvufVA/CNI0tA2nmbY5SNZbnyKmcA/Q4t+XerOxiAVe9wkEicu6dSGq4C8pCizvtGfJArkM/jJ9SCC40m76r3RHdkUPayzGTwHEITQOP5KA0vil9+9TCa5aKsfn3JXX4sjs/IWcdEzTNElC9r9dGrDtQ2UtCXKrlzr0OcQgJHiLM//ALf2X5453le3cQ3hbgVjShHZW0q4Wpc=
 
 before_script:
- - sudo netstat -nat | grep 53
- - uname -a
- - sudo netstat -tulpn | grep 53
- - sudo fuser 53/tcp
- - sudo fuser 53/udp
- - sudo lsof -i :53
- - ps auxww
- - ls /etc/init.d
- - sudo updatedb
- - locate dnsmasq
  - sudo killall dnsmasq
-#  - sudo /etc/init.d/dnsmasq stop
-# - sudo systemctl
-# - sudo service dnsmasq stop
-# - sudo service --status-all
-
 
 script:
  - docker-compose up -d
