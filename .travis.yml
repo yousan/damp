@@ -17,7 +17,9 @@ before_script:
  - sudo fuser 53/udp
  - sudo lsof -i :53
  - ps auxww
- - sudo service dnsmasq stop
+ - sudo systemctl
+# - sudo service dnsmasq stop
+# - sudo service --status-all
 
 
 script:
