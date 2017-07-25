@@ -14,7 +14,7 @@ services:
       # Add symlink directories if you use symlinks at documents.
 #      - ~/git:/Users/yousan/git
 #      - ~/svn:/Users/yousan/svn
-#      - ~/public_html:/var/www/vhosts
+      - ~/public_html:/var/www/vhosts
     environment:
       PMA_HOST: mysql.dev
       PMA_USER: root
