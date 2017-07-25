@@ -1,8 +1,9 @@
-version: '2'
+version: '3'
 
 services:
 
   php5.6-apache.dev:
+    container_name: php.dev
     restart: always
     image: yousan/php5.6-apache:1.0
     ports:
@@ -20,6 +21,7 @@ services:
       PMA_PASSWORD: example
 
   mysql.dev:
+    container_name: mysql.dev
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: example
@@ -29,6 +31,7 @@ services:
       - /private/var/lib/mysql:/var/lib/mysql
 
   dnsmasq.dev:
+    container_name: dnsmasq.dev
     image: yousan/dnsmasq
     ports:
       - 53:53/tcp
