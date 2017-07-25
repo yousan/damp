@@ -8,6 +8,8 @@ fi
 # dnsmasq check
 RET=`nslookup example.dev 127.0.0.1 -timeout=1 | grep 'Address: 127.0.0.1'`
 if [ ! -z "$RET" ]; then
+  echo 'nslookup successed'
+  exit 1; # failed
   exit 0;
 else
   echo 'nslookup failed'
