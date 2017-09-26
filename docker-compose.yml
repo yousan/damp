@@ -5,15 +5,16 @@ services:
   php5.6-apache.dev:
     container_name: php.dev
     restart: always
-    image: yousan/php5.6-apache:1.0
+    image: yousan/php5.6-apache:1.1
+#    build: ../damp_dockerfile/php5.6/apache/ # for develop
     ports:
       - 80:80
 #      - 9000:9000
     volumes:
       - ./php5.6-apache-php:/tmp/php/
       # Add symlink directories if you use symlinks at documents.
-#      - ~/git:/Users/yousan/git
-#      - ~/svn:/Users/yousan/svn
+      - ~/git:/Users/yousan/git
+      - ~/svn:/Users/yousan/svn
       - ~/public_html:/var/www/vhosts
     environment:
       PMA_HOST: mysql.dev
