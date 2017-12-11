@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -xe
 
-if [ ! -d  ~/public_html/example.dev ]; then
-  mkdir -p ~/public_html/example.dev
+if [ ! -d  ~/public_html/example.test ]; then
+  mkdir -p ~/public_html/example.test
 fi
 
 # dnsmasq check
-RET=`nslookup example.dev 127.0.0.1 -timeout=1 | grep 'Address: 127.0.0.1'`
+RET=`nslookup example.test 127.0.0.1 -timeout=1 | grep 'Address: 127.0.0.1'`
 if [ ! -z "$RET" ]; then
 : #  exit 0;
 else
@@ -15,10 +15,10 @@ else
 fi
 
 # httpd standard check
-echo 'Hello World' > ~/public_html/example.dev/hello.html
-RET=`curl -s --max-time 1 http://example.dev/hello.html | grep 'Hello World'`
+echo 'Hello World' > ~/public_html/example.test/hello.html
+RET=`curl -s --max-time 1 http://example.test/hello.html | grep 'Hello World'`
 if [ ! -z "$RET" ]; then
-  rm ~/public_html/example.dev/hello.html
+  rm ~/public_html/example.test/hello.html
 : #  exit 0;
 else
   echo 'httpd check failed'
@@ -27,12 +27,12 @@ fi
 
 
 # symlink check
-#if [ ! -d ~/tmp/example_link.dev ]; then
-#  mkdir ~/tmp/example_link.dev
+#if [ ! -d ~/tmp/example_link.test ]; then
+#  mkdir ~/tmp/example_link.test
 #fi
-#echo 'I am a Pen.' > ~/tmp/example_link.dev/index.html
-#ln -s ~/tmp/example_link.dev ~/public_html/example_link.dev
-#RET=`curl -s --max-time 1 http://example_link.dev/index.html | grep 'I am a Pen.'`
+#echo 'I am a Pen.' > ~/tmp/example_link.test/index.html
+#ln -s ~/tmp/example_link.test ~/public_html/example_link.test
+#RET=`curl -s --max-time 1 http://example_link.test/index.html | grep 'I am a Pen.'`
 #if [ ! -z "$RET" ]; then
 #: #  exit 0;
 #else

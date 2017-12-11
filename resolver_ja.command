@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 BASE=/etc/
 
-echo '"*.dev"のアクセスをローカルホストに向ける設定を行います。'
+echo '"*.test"のアクセスをローカルホストに向ける設定を行います。'
 
 make_resolver() {
    if [ ! -d ${BASE}/resolver ] ; then
@@ -13,7 +13,7 @@ make_resolver() {
      echo 'ファイルが既に存在しました'
      return
    else
-     sudo sh -c "echo 'nameserver 127.0.0.1' > ${BASE}/resolver/dev"
+     sudo sh -c "echo 'nameserver 127.0.0.1' > ${BASE}/resolver/test"
    fi
 }
 

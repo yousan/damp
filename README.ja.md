@@ -16,7 +16,7 @@ docker-compose up
 ## DAMPでなにができるの？
 
 フォルダを作るとブラウザでアクセスできるローカル環境ができます。
-例えば ~/public_html/test.dev というフォルダを作ると http://test.dev でアクセスすることができます。
+例えば ~/public_html/test.test というフォルダを作ると http://test.test でアクセスすることができます。
 
 便利じゃないですか？
 案件がたくさんあっても切り替え簡単なんです。
