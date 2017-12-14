@@ -2,10 +2,10 @@ version: '3'
 
 services:
 
-  php5.6-apache.dev:
-    container_name: php.dev
+  php5.6-apache.test:
+    container_name: php.test
     restart: always
-    image: yousan/php5.6-apache:1.1
+    image: yousan/php5.6-apache:latest
 #    build: ../damp_dockerfile/php5.6/apache/ # for develop
     ports:
       - 80:80
@@ -17,12 +17,12 @@ services:
       - ~/svn:/Users/yousan/svn
       - ~/public_html:/var/www/vhosts
     environment:
-      PMA_HOST: mysql.dev
+      PMA_HOST: mysql.test
       PMA_USER: root
       PMA_PASSWORD: example
 
-  mysql.dev:
-    container_name: mysql.dev
+  mysql.test:
+    container_name: mysql.test
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: example
@@ -31,19 +31,19 @@ services:
     volumes:
       - /private/var/lib/mysql:/var/lib/mysql
 
-  dnsmasq.dev:
-    container_name: dnsmasq.dev
+  dnsmasq.test:
+    container_name: dnsmasq.test
     image: yousan/dnsmasq
     ports:
       - 53:53/tcp
       - 53:53/udp
     cap_add:
       - NET_ADMIN
-  # selenium.dev:
+  # selenium.test:
   #   image: selenium/standalone-chrome-debug:latest
   #   ports:
   #    - 4444:4444/tcp
   #    - 5901:5900/tcp
   #   external_links:
-  #    - php5.6-apache.dev:zaip.dev
+  #    - php5.6-apache.test:zaip.test
      
