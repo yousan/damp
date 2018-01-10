@@ -13,8 +13,8 @@ services:
     volumes:
       - ./php5.6-apache-php:/tmp/php/
       # Add symlink directories if you use symlinks at documents.
-      - ~/git:/Users/yousan/git
-      - ~/svn:/Users/yousan/svn
+      - ~/git:$HOME/git
+      - ~/svn:$HOME/svn
       - ~/public_html:/var/www/vhosts
     environment:
       PMA_HOST: mysql.dev
