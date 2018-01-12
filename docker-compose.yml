@@ -46,4 +46,3 @@ services:
   #    - 5901:5900/tcp
   #   external_links:
   #    - php5.6-apache.dev:zaip.dev
-     
