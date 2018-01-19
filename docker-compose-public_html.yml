@@ -4,14 +4,14 @@ services:
   php5.6-apache.test:
     container_name: php.test
     restart: always
-    image: yousan/php5.6-apache:1.6
+    image: yousan/php5.6-apache:develop
     ports:
       - 80:80
-#      - 9000:9000
     volumes:
       - ./php5.6-apache-php:/tmp/php/
+      - $HOME/git:$HOME/git
       # Add symlink directories if you use symlinks at documents.
-      - ~/public_html:/var/www/vhosts
+      - $HOME/public_html:/var/www/vhosts
     environment:
       PMA_HOST: mysql.test
       PMA_USER: root
