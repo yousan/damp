@@ -9,7 +9,7 @@ make_resolver() {
      sudo mkdir ${BASE}/resolver
    fi
 
-   if [ -f ${BASE}/resolver/dev ] ; then
+   if [ -f ${BASE}/resolver/test ] ; then
      echo 'ファイルが既に存在しました'
      return
    else
