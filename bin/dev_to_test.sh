@@ -8,8 +8,8 @@
 
 # docker exec -it php.test cat /etc/apache2/sites-available/000-default.conf
 
-docker exec -it php.test sed -i -e 's/ServerAlias \*\.dev/ServerAlias \*\.test/' /etc/apache2/sites-available/000-default.conf
-docker exec -it php.test sed -i -e 's/ServerAlias pma\.dev/ServerAlias pma\.dev pma\.test/' /etc/apache2/sites-available/000-default.conf
+docker exec -i php.test sed -i -e 's/ServerAlias \*\.dev/ServerAlias \*\.test/' /etc/apache2/sites-available/000-default.conf
+docker exec -i php.test sed -i -e 's/ServerAlias pma\.dev/ServerAlias pma\.dev pma\.test/' /etc/apache2/sites-available/000-default.conf
 
 # docker exec -it php.test cat /etc/apache2/sites-available/000-default.conf
 
