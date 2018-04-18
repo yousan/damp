@@ -1,10 +1,12 @@
 version: '3'
 
 services:
+
   php5.6-apache.test:
     container_name: php.test
     restart: always
-    image: yousan/php5.6-apache:develop
+    image: yousan/php5.6-apache:latest
+#    build: ../damp_dockerfile/php5.6/apache/ # for develop
     ports:
       - 80:80
     volumes:
@@ -29,9 +31,16 @@ services:
 
   dnsmasq.test:
     container_name: dnsmasq.test
-    image: yousan/dnsmasq:1.6
+    image: yousan/dnsmasq:1.6.1
     ports:
       - 53:53/tcp
       - 53:53/udp
     cap_add:
       - NET_ADMIN
+  # selenium.test:
+  #   image: selenium/standalone-chrome-debug:latest
+  #   ports:
+  #    - 4444:4444/tcp
+  #    - 5901:5900/tcp
+  #   external_links:
+  #    - php5.6-apache.test:zaip.test
