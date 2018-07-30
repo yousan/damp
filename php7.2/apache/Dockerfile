@@ -26,7 +26,7 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN a2enmod rewrite expires
+RUN a2enmod rewrite expires vhost_alias
 
 # mcrypt @link http://willow710kut.hatenablog.com/entry/2018/02/14/213158
 RUN apt-get update -y \
@@ -44,9 +44,9 @@ RUN apt-get update -y \
 # pgsql, pdo_sql: postgresql-client # 動かない
 # @link https://hub.docker.com/r/plab/docker-php/~/dockerfile/
 RUN apt-get update && apt-get install -y \
-	libbz2-dev bzip2 \
-	libcurl4-openssl-dev \
-	&& docker-php-ext-install mbstring bz2 zip curl
+  libicu-dev \
+  && docker-php-ext-configure intl \
+  && docker-php-ext-install intl
 
 # gdをfreetype, pngとかに対応させたいが動かない
 # apt-get install -y libfreetype6-test libjpeg62-turbo-test libpng12-test \
@@ -56,10 +56,6 @@ RUN apt-get update && apt-get install -y \
 #	apt-get install libghc-postgresql-libpq-test \
 #	&& docker-php-ext-install pgsql pdo_pgsql
 #	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
-
-# Install new curl for PHP
-#RUN apt-get install -y \
-#    && docker-php-ext-install curl
 
 # Install pdo
 RUN apt-get install -y \
