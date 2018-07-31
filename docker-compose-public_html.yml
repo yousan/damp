@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  php7.2-apache.test:
+    container_name: php.test
+    restart: always
+    image: yousan/php7.2-apache:1.7
+    ports:
+      - 80:80
+#      - 9000:9000
+    volumes:
+      - ./php7.2-apache-php:/tmp/php/
+      # Add symlink directories if you use symlinks at documents.
+      - ~/public_html:/var/www/vhosts
+    environment:
+      PMA_HOST: mysql.test
+      PMA_USER: root
+      PMA_PASSWORD: example
+
+  mysql.test:
+    container_name: mysql.test
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
+    volumes:
+      - /private/var/lib/mysql:/var/lib/mysql
+
+  dnsmasq.test:
+    container_name: dnsmasq.test
+    image: yousan/dnsmasq:1.7
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    cap_add:
+      - NET_ADMIN
