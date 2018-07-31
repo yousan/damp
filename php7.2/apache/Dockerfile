@@ -26,7 +26,11 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN a2enmod rewrite expires
+RUN a2enmod rewrite expires vhost_alias
+
+# for DAMP develop DAMP開発用
+RUN apt-get update && apt-get install -y \
+  emacs-nox mlocate less
 
 # mcrypt @link http://willow710kut.hatenablog.com/entry/2018/02/14/213158
 RUN apt-get update -y \
@@ -34,44 +38,27 @@ RUN apt-get update -y \
     && echo '' | pecl install mcrypt-1.0.1 \
     && echo 'extension=mcrypt.so' > /usr/local/etc/php/conf.d/docker-php-ext-pecl.ini
 
-
 # @link https://github.com/phpbrew/phpbrew/issues/786
 # RUN apt-get install libbz2-dev
 
 # Install packages（コロンの後ろはaptで必要なパッケージ）
 # mbstring
 # bz2: bzip2 libbz2-dev
+# intl: libicu-dev # @link https://github.com/docker-library/php/issues/57
 # pgsql, pdo_sql: postgresql-client # 動かない
 # @link https://hub.docker.com/r/plab/docker-php/~/dockerfile/
 RUN apt-get update && apt-get install -y \
-	libbz2-dev bzip2 \
-	libcurl4-openssl-dev \
-	&& docker-php-ext-install mbstring bz2 zip curl
+  bzip2 libbz2-dev \
+  libicu-dev \
+  && docker-php-ext-configure intl \
+  && docker-php-ext-install mbstring bz2 zip intl pdo pdo_mysql
 
 # gdをfreetype, pngとかに対応させたいが動かない
 # apt-get install -y libfreetype6-test libjpeg62-turbo-test libpng12-test \
 #	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/
 
-# pgsql, pdo_sql が動かない
+# pgsql, pdo_pgsql が動かない
 #	apt-get install libghc-postgresql-libpq-test \
 #	&& docker-php-ext-install pgsql pdo_pgsql
 #	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
 
-# Install new curl for PHP
-#RUN apt-get install -y \
-#    && docker-php-ext-install curl
-
-# Install pdo
-RUN apt-get install -y \
-    && docker-php-ext-install pdo pdo_mysql
-
-# for DAMP develop DAMP開発用
-# RUN apt-get update && apt-get install -y \
-#   && emacs-nox mlocate less
-
-# icu-devtools
-# @link https://github.com/docker-library/php/issues/57
-RUN apt-get update && apt-get install -y \
-  icu-devtools icu-doc libicu-dev libicu57 libicu57-dbg \
-  && docker-php-ext-configure intl \
-  && docker-php-ext-install intl

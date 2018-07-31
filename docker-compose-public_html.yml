@@ -1,15 +1,15 @@
 version: '3'
 
 services:
-  php5.6-apache.test:
+  php7.2-apache.test:
     container_name: php.test
     restart: always
-    image: yousan/php5.6-apache:1.6
+    image: yousan/php7.2-apache:1.7
     ports:
       - 80:80
 #      - 9000:9000
     volumes:
-      - ./php5.6-apache-php:/tmp/php/
+      - ./php7.2-apache-php:/tmp/php/
       # Add symlink directories if you use symlinks at documents.
       - ~/public_html:/var/www/vhosts
     environment:
@@ -29,7 +29,7 @@ services:
 
   dnsmasq.test:
     container_name: dnsmasq.test
-    image: yousan/dnsmasq:1.6
+    image: yousan/dnsmasq:1.7
     ports:
       - 53:53/tcp
       - 53:53/udp
