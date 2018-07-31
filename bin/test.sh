@@ -16,7 +16,7 @@ fi
 
 # httpd standard check
 echo 'Hello World' > ~/public_html/example.test/hello.html
-RET=`curl --max-time 1 http://example.test/hello.html | grep 'Hello World'`
+RET=`curl --max-time 1 -H 'Host: example.com' http://127.0.0.1/hello.html | grep 'Hello World'`
 if [ ! -z "$RET" ]; then
   rm ~/public_html/example.test/hello.html
 : #  exit 0;
