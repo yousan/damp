@@ -47,11 +47,15 @@ RUN apt-get update -y \
 # intl: libicu-dev # @link https://github.com/docker-library/php/issues/57
 # pgsql, pdo_sql: postgresql-client # 動かない
 # @link https://hub.docker.com/r/plab/docker-php/~/dockerfile/
+# imagick: @see https://github.com/docker-library/php/issues/105#issuecomment-421081065
 RUN apt-get update && apt-get install -y \
   bzip2 libbz2-dev \
   libicu-dev \
+  && apt-get install -y --no-install-recommends libmagickwand-dev \
+  && pecl install imagick-3.4.3 \
   && docker-php-ext-configure intl \
-  && docker-php-ext-install mbstring bz2 zip intl pdo pdo_mysql
+  && docker-php-ext-install mbstring bz2 zip intl pdo pdo_mysql \
+  && docker-php-ext-enable imagick
 
 # gdをfreetype, pngとかに対応させたいが動かない
 # apt-get install -y libfreetype6-test libjpeg62-turbo-test libpng12-test \
