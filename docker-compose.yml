@@ -22,7 +22,7 @@ services:
   php7.2-apache.test:
     container_name: php72.test
     restart: always
-    image: yousan/php7.2-apache:1.7
+    image: yousan/php7.2-apache
 #    build: ../damp_dockerfile/php5.6/apache/ # for develop
     ports:
       - 80:80
@@ -51,7 +51,7 @@ services:
 
   dnsmasq.test:
     container_name: dnsmasq.test
-    image: yousan/dnsmasq:1.6.1
+    image: yousan/dnsmasq
     ports:
       - 53:53/tcp
       - 53:53/udp
