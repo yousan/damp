@@ -51,7 +51,7 @@ services:
 
   dnsmasq.test:
     container_name: dnsmasq.test
-    image: yousan/dnsmasq
+    image: yousan/dnsmasq:1.6.1
     ports:
       - 53:53/tcp
       - 53:53/udp
@@ -64,4 +64,3 @@ services:
   #    - 5901:5900/tcp
   #   external_links:
   #    - php5.6-apache.test:zaip.test
-     

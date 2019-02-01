@@ -3,7 +3,6 @@ FROM php:7.2-apache
 
 # install the PHP extensions we need
 RUN set -ex; \
-	\
 	apt-get update; \
 	apt-get install -y \
 		libjpeg-dev \
@@ -51,6 +50,7 @@ RUN apt-get update -y \
 RUN apt-get update && apt-get install -y \
   bzip2 libbz2-dev \
   libicu-dev \
+  mysql-client \
   && apt-get install -y --no-install-recommends libmagickwand-dev \
   && pecl install imagick-3.4.3 \
   && docker-php-ext-configure intl \
