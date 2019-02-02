@@ -12,8 +12,8 @@ notifications:
 
 before_script:
 #  - sudo killall dnsmasq
-
-script:
  - docker-compose up -d
  - docker ps
+
+script:
  - sudo ./bin/test.sh
