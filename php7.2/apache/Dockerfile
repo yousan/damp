@@ -29,7 +29,7 @@ RUN a2enmod rewrite expires vhost_alias
 
 # for DAMP develop DAMP開発用
 RUN apt-get update && apt-get install -y \
-  emacs-nox mlocate less
+  emacs-nox mlocate less git
 
 # mcrypt @link http://willow710kut.hatenablog.com/entry/2018/02/14/213158
 RUN apt-get update -y \
