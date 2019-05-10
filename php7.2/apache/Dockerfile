@@ -66,6 +66,11 @@ RUN cd /tmp \
   && chmod +x composer.phar \
   && mv composer.phar /usr/local/bin/composer
 
+# Install nodebrew, node and npm
+RUN cd / \
+  && curl -L git.io/nodebrew | perl - setup \
+  && echo "PATH=$HOME/.nodebrew/current/bin:$PATH" >> ~/.bashrc && . ~/.bashrc \
+  && nodebrew install v8.9.4 && nodebrew use v8.9.4
 
 # gdをfreetype, pngとかに対応させたいが動かない
 # apt-get install -y libfreetype6-test libjpeg62-turbo-test libpng12-test \
