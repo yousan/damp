@@ -64,3 +64,10 @@ services:
   #    - 5901:5900/tcp
   #   external_links:
   #    - php5.6-apache.test:zaip.test
+
+  mailcatcher.test:
+    container_name: mailcatcher.test
+    image: schickling/mailcatcher
+    ports:
+      - 1025:1025/tcp
+      - 1080:1080/tcp

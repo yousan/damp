@@ -50,17 +50,19 @@ RUN apt-get update -y \
 RUN apt-get update && apt-get install -y \
   bzip2 libbz2-dev \
   libicu-dev \
-  mysql-client \
+  default-mysql-client \
   && apt-get install -y --no-install-recommends libmagickwand-dev \
   && pecl install imagick-3.4.3 \
   && docker-php-ext-configure intl \
   && docker-php-ext-install mbstring bz2 zip intl pdo pdo_mysql \
   && docker-php-ext-enable imagick
 
+
+
 # composerのインストール。aptからインストールしようとすると依存パッケージのインストール失敗でエラーになるので手動で。
 RUN cd /tmp \
   && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-  && php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+  && php -r "if (hash_file('sha384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
   && php composer-setup.php \
   && php -r "unlink('composer-setup.php');" \
   && chmod +x composer.phar \
@@ -76,3 +78,19 @@ RUN cd /tmp \
 #	&& docker-php-ext-install pgsql pdo_pgsql
 #	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
 
+RUN echo "\
+dc_eximconfig_configtype='satellite'\n\
+dc_other_hostnames=''\n\
+dc_local_interfaces=''\n\
+dc_readhost=''\n\
+dc_relay_domains=''\n\
+dc_minimaldns='false'\n\
+dc_relay_nets=''\n\
+dc_smarthost='mailcatcher.test::1025'\n\
+CFILEMODE='644'\n\
+dc_use_split_config='false'\n\
+dc_hide_mailname='true'\n\
+dc_mailname_in_oh='true'\n\
+dc_localdelivery='mail_spool'\n\
+" > /etc/exim4/update-exim4.conf.conf \
+  && /usr/sbin/update-exim4.conf
