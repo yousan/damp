@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Legacy: only for the old *.dev images. Not needed with the current docker-compose.yml.
 # Chrome63ぐらいから *.dev を受け付けてくれなくなったので、それを書き換える用のスクリプト
 # 1. Chromeが *.dev を開発用に使えなくしてしまった
 # 2. そのためDockerの中身を *.test に書き換える必要がある

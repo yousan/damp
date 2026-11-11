@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    # Weekly rebuild so a broken upstream image or package shows up early.
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      # dnsmasq.test publishes port 53; free it from the runner's systemd-resolved stub.
+      - name: Free port 53
+        run: |
+          sudo mkdir -p /etc/systemd/resolved.conf.d
+          printf '[Resolve]\nDNSStubListener=no\n' | sudo tee /etc/systemd/resolved.conf.d/no-stub.conf
+          sudo systemctl restart systemd-resolved
+          sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+      - name: Build and start
+        run: docker compose up -d --build
+
+      - name: Smoke test
+        run: bin/test.sh
+
+      - name: Logs on failure
+        if: failure()
+        run: |
+          docker compose ps -a
+          docker compose logs --no-color --tail=100
