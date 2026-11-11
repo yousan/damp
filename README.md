@@ -7,6 +7,7 @@ docker compose up
 ```
 
 [![CI](https://github.com/yousan/damp/actions/workflows/ci.yml/badge.svg)](https://github.com/yousan/damp/actions/workflows/ci.yml)
+[![docker-publish](https://github.com/yousan/damp/actions/workflows/docker-publish.yml/badge.svg?branch=master)](https://github.com/yousan/damp/actions/workflows/docker-publish.yml)
 
 ## DAMPでなにができるの？
 
@@ -36,7 +37,7 @@ cd damp
 docker compose up
 ```
 
-The first start builds the PHP image locally, which takes a few minutes.
+The first start pulls the PHP image `yousan/php8.4-apache` (linux/amd64 and linux/arm64) from Docker Hub.
 
 ## Down
 
@@ -48,11 +49,21 @@ docker compose down
 
 ```bash
 git pull
-docker compose build --pull
+docker compose pull
 docker compose up -d --remove-orphans
 ```
 
-Rebuild regularly so the image picks up PHP security releases.
+`yousan/php8.4-apache:latest` is rebuilt every week, so `docker compose pull` picks up PHP security releases.
+Each image is also tagged with its PHP version (e.g. `yousan/php8.4-apache:8.4.27`).
+
+To build the PHP image yourself from `php8.4/apache/Dockerfile` instead (e.g. after editing it):
+
+```bash
+docker compose build --pull php.test
+docker compose up -d
+```
+
+`docker compose pull` switches back to the Docker Hub image.
 
 Upgrading from the old PHP 7.2 setup (container `php72.test`): the service was renamed, so remove the
 old container with `--remove-orphans` as in the Update commands above (or `docker rm -f php72.test`);
@@ -64,7 +75,7 @@ are no longer used; copy them into `php8.4/apache/php/user.ini`.
 
 | Service | What | Address |
 | --- | --- | --- |
-| `php.test` | Apache + PHP 8.4 (`php8.4/apache`) | port 80, `http://<name>.test/` |
+| `php.test` | Apache + PHP 8.4 (`yousan/php8.4-apache`, built from `php8.4/apache`) | port 80, `http://<name>.test/` |
 | `phpmyadmin.test` | Official `phpmyadmin` image | `http://pma.test/` (user `root`, password `example`) |
 | `mysql.test` | MariaDB | port 3306, host `mysql.test` from PHP |
 | `dnsmasq.test` | `*.test` -> 127.0.0.1 | port 53 |
