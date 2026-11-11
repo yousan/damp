@@ -29,6 +29,7 @@ to point `/etc/resolver/test` at it).
 ## Up
 
 ```bash
+mkdir -p ~/public_html   # create it yourself, or Docker creates it owned by root on Linux
 git clone https://github.com/yousan/damp.git
 cd damp
 docker compose up

@@ -20,6 +20,7 @@ Hostsの編集もいらないです。
 ## DAMPのインストール方法
 
 ```shell
+mkdir -p ~/public_html   # 先に作っておく（Linux では無いと root 所有で作られる）
 git clone https://github.com/yousan/damp.git
 cd damp
 docker compose up

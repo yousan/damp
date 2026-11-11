@@ -27,8 +27,11 @@ jobs:
           sudo systemctl restart systemd-resolved
           sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
+      # Create it as the runner user; otherwise Docker creates it owned by root.
       - name: Build and start
-        run: docker compose up -d --build
+        run: |
+          mkdir -p ~/public_html
+          docker compose up -d --build
 
       - name: Smoke test
         run: bin/test.sh
