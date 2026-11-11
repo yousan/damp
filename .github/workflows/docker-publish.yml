@@ -67,6 +67,11 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
 
+      # yousan/dnsmasq is amd64-only. Docker Desktop on Apple silicon runs it emulated;
+      # do the same here so the arm64 stack is tested the way Mac users run it.
+      - uses: docker/setup-qemu-action@v3
+        if: matrix.arch != 'amd64'
+
       # dnsmasq.test publishes port 53; free it from the runner's systemd-resolved stub.
       - name: Free port 53
         run: |
