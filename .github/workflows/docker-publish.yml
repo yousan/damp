@@ -79,6 +79,8 @@ jobs:
           printf '[Resolve]\nDNSStubListener=no\n' | sudo tee /etc/systemd/resolved.conf.d/no-stub.conf
           sudo systemctl restart systemd-resolved
           sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+          echo 'listening on :53 after the change:'
+          sudo ss -Hlntup 'sport = :53' || true
 
       - name: Smoke test with the built image (docker-compose.yml, no rebuild)
         run: |
