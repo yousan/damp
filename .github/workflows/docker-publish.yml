@@ -18,6 +18,7 @@ on:
       - docker-compose.yml
       - bin/test.sh
       - .github/workflows/docker-publish.yml
+      - .github/compose.ci.yml
 
 concurrency:
   group: docker-publish-${{ github.ref }}
@@ -46,6 +47,8 @@ jobs:
     timeout-minutes: 40
     env:
       HAS_DOCKERHUB_SECRETS: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
+      # dnsmasq on 127.0.0.1:53 only; see .github/compose.ci.yml.
+      COMPOSE_FILE: docker-compose.yml:.github/compose.ci.yml
       # Only master (push, manual run or schedule on master) may overwrite :latest.
       PUSH_EVENT: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/master' }}
     steps:
@@ -72,27 +75,12 @@ jobs:
       - uses: docker/setup-qemu-action@v3
         if: matrix.arch != 'amd64'
 
-      # Pull everything first: freeing port 53 below can leave the runner without DNS for a while.
-      - name: Pull the other images
-        run: docker compose pull phpmyadmin.test mysql.test dnsmasq.test
-
-      # dnsmasq.test publishes port 53; free it from the runner's systemd-resolved stub.
-      - name: Free port 53
-        run: |
-          sudo mkdir -p /etc/systemd/resolved.conf.d
-          printf '[Resolve]\nDNSStubListener=no\n' | sudo tee /etc/systemd/resolved.conf.d/no-stub.conf
-          sudo systemctl restart systemd-resolved
-          sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
-          for _ in $(seq 1 15); do
-            [ -z "$(sudo ss -Hlntup 'sport = :53')" ] && break
-            sleep 1
-          done
-          echo 'still listening on :53 (should be empty):'
-          sudo ss -Hlntup 'sport = :53' || true
-
       - name: Smoke test with the built image (docker-compose.yml, no rebuild)
         run: |
           mkdir -p ~/public_html
+          echo 'listening on :53 before the test:'
+          sudo ss -Hlntup 'sport = :53' || true
+          docker compose pull phpmyadmin.test mysql.test dnsmasq.test
           # Use the image built above, never the one on Docker Hub.
           docker compose up -d --no-build --pull never
           echo "machine: $(docker exec php.test uname -m)"
@@ -104,16 +92,9 @@ jobs:
           docker compose ps -a
           docker compose logs --no-color --tail=100
 
-      # Give the runner its normal DNS back before talking to Docker Hub.
-      - name: Stop the stack and restore DNS
+      - name: Stop the stack
         if: always()
-        run: |
-          docker compose down
-          sudo rm -f /etc/systemd/resolved.conf.d/no-stub.conf
-          sudo systemctl restart systemd-resolved
-          sudo ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-          for _ in $(seq 1 15); do getent hosts registry-1.docker.io >/dev/null && break; sleep 1; done
-          getent hosts registry-1.docker.io
+        run: docker compose down || true
 
       - name: PHP version
         run: |
