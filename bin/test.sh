@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Smoke test for a running DAMP stack (docker compose up -d).
-# Checks: dnsmasq answers *.test, Apache serves ~/public_html/<name>.test,
+# Checks: dnsmasq answers *.test, Apache serves ~/public_html/<name>.test (and a non-.test host),
 # PHP runs on a supported version, and http://pma.test/ reaches phpMyAdmin.
 set -eu
 
