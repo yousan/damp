@@ -27,7 +27,7 @@ docker compose up
 ```
 
 初回は PHP のイメージを手元でビルドするので数分かかります。
-更新するときは `git pull` のあと `docker compose build --pull` を実行してください（PHP のセキュリティ修正を取り込むため）。
+更新するときは `git pull` のあと `docker compose build --pull` と `docker compose up -d --remove-orphans` を実行してください（PHP のセキュリティ修正を取り込むため）。
 
 以前の PHP 7.2 版（コンテナ名 `php72.test`）から更新するときは、サービス名が変わったので一度だけ
 `docker compose up -d --remove-orphans`（または `docker rm -f php72.test`）で古いコンテナを消してください。

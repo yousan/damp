@@ -7,6 +7,6 @@ sleep 3
 
 cd -- "$(dirname "$BASH_SOURCE")"
 
-docker compose up
+docker compose up --remove-orphans
 
 echo 'DAMPが終了しました。閉じるボタンを押して終了してください。'

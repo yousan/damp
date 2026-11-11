@@ -22,7 +22,8 @@ Hostsの編集もいらないです。
 
 # How to use
 
-`~/public_html/<name>.test/` is served at `http://<name>.test/`.
+`~/public_html/<name>.test/` is served at `http://<name>.test/` (any hostname that reaches port 80,
+such as `<name>.localhost`, is served from `~/public_html/<hostname>/`).
 `*.test` is resolved to 127.0.0.1 by the bundled dnsmasq (on macOS, run `resolver_ja.command` once
 to point `/etc/resolver/test` at it).
 
@@ -48,13 +49,14 @@ docker compose down
 ```bash
 git pull
 docker compose build --pull
-docker compose up -d
+docker compose up -d --remove-orphans
 ```
 
 Rebuild regularly so the image picks up PHP security releases.
 
 Upgrading from the old PHP 7.2 setup (container `php72.test`): the service was renamed, so remove the
-old container once with `docker compose up -d --remove-orphans` (or `docker rm -f php72.test`).
+old container with `--remove-orphans` as in the Update commands above (or `docker rm -f php72.test`);
+otherwise the old container keeps port 80 and the new one fails to start.
 MariaDB data in `/private/var/lib/mysql` is kept. PHP settings you changed under `php7.2/apache/php`
 are no longer used; copy them into `php8.4/apache/php/user.ini`.
 
