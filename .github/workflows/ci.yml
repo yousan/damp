@@ -16,16 +16,11 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # dnsmasq on 127.0.0.1:53 only; see .github/compose.ci.yml.
+      COMPOSE_FILE: docker-compose.yml:.github/compose.ci.yml
     steps:
       - uses: actions/checkout@v4
-
-      # dnsmasq.test publishes port 53; free it from the runner's systemd-resolved stub.
-      - name: Free port 53
-        run: |
-          sudo mkdir -p /etc/systemd/resolved.conf.d
-          printf '[Resolve]\nDNSStubListener=no\n' | sudo tee /etc/systemd/resolved.conf.d/no-stub.conf
-          sudo systemctl restart systemd-resolved
-          sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
       # Create it as the runner user; otherwise Docker creates it owned by root.
       - name: Build and start
