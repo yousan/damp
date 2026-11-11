@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Legacy: builds the old, unmaintained PHP 7.2 image (php7.2/apache). The default stack builds php8.4/apache via docker-compose.yml.
 # export VERSION=1.8.1 ;
 
 echo $VERSION
