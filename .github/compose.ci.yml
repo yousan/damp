@@ -1,5 +1,5 @@
 # CI only: publish dnsmasq on 127.0.0.1:53 instead of all interfaces. GitHub runners
-# already run their own resolvers on other loopback addresses (127.0.0.53, 127.0.0.100, ...),
+# run their own resolvers on other loopback addresses (127.0.0.53, and on some arm runners 127.0.0.100),
 # which conflict with 0.0.0.0:53 but not with 127.0.0.1:53. bin/test.sh queries 127.0.0.1.
 services:
   dnsmasq.test:
