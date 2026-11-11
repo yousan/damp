@@ -1,6 +1,7 @@
 # DAMP default image: Apache + mod_php on a supported PHP release.
-# php:8.4-apache follows the latest 8.4.x patch release; rebuild to pick up fixes
-# (docker compose build --pull).
+# Published as yousan/php8.4-apache (amd64/arm64) by .github/workflows/docker-publish.yml,
+# rebuilt weekly. php:8.4-apache follows the latest 8.4.x patch release; to build it
+# yourself run: docker compose build --pull php.test
 FROM php:8.4-apache
 
 # PHP extensions

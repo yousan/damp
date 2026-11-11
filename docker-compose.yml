@@ -5,8 +5,10 @@ services:
   php.test:
     container_name: php.test
     restart: always
+    # Pulled from Docker Hub (built by .github/workflows/docker-publish.yml for amd64/arm64).
+    # To build it yourself instead: docker compose build --pull php.test
+    image: yousan/php8.4-apache:latest
     build: ./php8.4/apache
-    image: damp/php8.4-apache:local
     ports:
       - 80:80
     volumes:
